@@ -46,3 +46,8 @@ PATCHDATESTRING=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INST
 
 #check if svcdeployprod home directory created
 ls /home | grep --word-regexp svcdeployprod
+
+echo echo "
+  ==============================
+  ========== Success ===========
+  =============================="
