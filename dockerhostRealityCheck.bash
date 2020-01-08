@@ -44,6 +44,12 @@ EC2_REGION=$(curl --silent http://169.254.169.254/latest/meta-data/placement/ava
 PATCHDATESTRING=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" "Name=key,Values=Last_patch" --region $EC2_REGION --query "Tags[].Value" --output text) && echo $PATCHDATESTRING
 [[ $(date --date="$(date) -30 days" +%s) -lt $(date --date="$PATCHDATESTRING" +%s) ]]
 
+#validate override to endgame esensor to run it with a nice value
+grep 'Nice=10' /etc/systemd/system/esensor.service.d/override.conf
+
+#validate snmp is lett than default chatty
+ps -ef | grep snmp | grep '[/]usr/sbin/snmpd -LS0-5d -f'
+
 #check if svcdeployprod home directory created
 ls /home | grep --word-regexp svcdeployprod
 
