@@ -56,6 +56,10 @@ ps -ef | grep snmp | grep '[/]usr/sbin/snmpd -LS0-5d -f'
 echo "check if svcdeployprod home directory created"
 ls /home | grep --word-regexp svcdeployprod
 
+#GS config
+echo "checking that we have greensky configs"
+[[ $(ls /opt/greensky/conf | wc -l) -gt 0 ]]
+
 #swap
 echo "check if we have swap"
 [[ $(swapon -s | wc -l) -gt 0 ]]
