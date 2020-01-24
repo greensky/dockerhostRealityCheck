@@ -3,6 +3,12 @@
 
 set -e
 
+#ssm agent
+echo "Checking if ssm agent is active (running now)"
+systemctl is-active amazon-ssm-agent
+echo "Checking if ssm agent is enabled (will start at boot)"
+systemctl is-enabled amazon-ssm-agent
+
 #docker
 echo "Checking if docker is active (running now)"
 systemctl is-active docker
