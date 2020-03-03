@@ -50,6 +50,10 @@ EC2_REGION=$(curl --silent http://169.254.169.254/latest/meta-data/placement/ava
 PATCHDATESTRING=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" "Name=key,Values=Last_patch" --region $EC2_REGION --query "Tags[].Value" --output text) && echo $PATCHDATESTRING
 [[ $(date --date="$(date) -30 days" +%s) -lt $(date --date="$PATCHDATESTRING" +%s) ]]
 
+#check that all drives are encrypted
+echo "Checking that all drives are encrypted"
+aws ec2 describe-volumes --region $EC2_REGION --filters Name=attachment.status,Values=attached Name=attachment.instance-id,Values=$INSTANCE_ID --query "Volumes[]"  | jq  -r ".[$i].Encrypted" | grep -vz false
+
 #endgame
 echo "validate override to endgame esensor to run it with a nice value"
 grep 'Nice=10' /etc/systemd/system/esensor.service.d/override.conf
