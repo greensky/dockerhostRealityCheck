@@ -18,7 +18,7 @@ systemctl is-enabled docker
 #data-dog
 echo "Checking if datadog container is active (running now)"
 docker inspect --format '{{.State.Running}}' dd-agent | grep --word-regexp true
-echo "Checking if datadog container is set to restart alwasy"
+echo "Checking if datadog container is set to restart always"
 docker inspect --format "{{ .HostConfig.RestartPolicy.Name }}" dd-agent | grep --word-regexp always
 
 #splunk
