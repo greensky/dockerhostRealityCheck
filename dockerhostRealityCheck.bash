@@ -74,6 +74,10 @@ echo "checking that we have greensky configs"
 echo "check if we have swap"
 [[ $(swapon -s | wc -l) -gt 0 ]]
 
+#ntpstat
+echo "Check if the clock is syncronized"
+ntpstat
+
 echo "
   ==============================
   ========== Success ===========
